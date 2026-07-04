@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>כיוונים ותחבורה - משחק הרפתקאות</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f9ff; }
+        .hidden { display: none; }
+        .card { background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); min-height: 450px; }
+        button { transition: all 0.2s; }
+        button:hover { transform: scale(1.02); }
+    </style>
+</head>
+<body class="p-4 md:p-10">
+
+    <div id="game-container" class="max-w-2xl mx-auto">
+        <div class="w-full bg-gray-200 rounded-full h-4 mb-6">
+            <div id="progress-bar" class="bg-green-500 h-4 rounded-full transition-all duration-300" style="width: 10%"></div>
+        </div>
+
+        <!-- الصفحة 1: الترحيب -->
+        <div id="page-1" class="card">
+            <h1 class="text-3xl font-bold text-blue-600 mb-6">ברוכים הבאים לעיר! 🏙️</h1>
+            <p class="text-xl mb-8">במשחק זה נצא להרפתקה בעיר ונלמד כיוונים ואמצעי תחבורה.</p>
+            <button onclick="nextPage()" class="w-full bg-blue-600 text-white p-4 rounded-xl font-bold text-xl">התחל במשחק!</button>
+        </div>
+
+        <!-- المراحل 2-4 -->
+        <div id="page-2" class="card hidden">
+            <h2 class="text-2xl font-bold mb-6">שאלה 1: איך מגיעים לבית הספר? 🏫</h2>
+            <div class="grid gap-4">
+                <button onclick="checkAnswer(true)" class="p-4 bg-blue-100 rounded-lg font-bold">באוטובוס 🚌</button>
+                <button onclick="checkAnswer(false)" class="p-4 bg-blue-100 rounded-lg font-bold">במטוס ✈️</button>
+            </div>
+            <button onclick="prevPage()" class="mt-8 text-gray-400 underline">חזור אחורה</button>
+        </div>
+
+        <div id="page-3" class="card hidden">
+            <h2 class="text-2xl font-bold mb-6">שאלה 2: איזה כלי תחבורה הוא מהיר מאוד?</h2>
+            <div class="grid gap-4">
+                <button onclick="checkAnswer(true)" class="p-4 bg-blue-100 rounded-lg font-bold">רכבת</button>
+                <button onclick="checkAnswer(false)" class="p-4 bg-blue-100 rounded-lg font-bold">אופניים 🚲</button>
+            </div>
+            <button onclick="prevPage()" class="mt-8 text-gray-400 underline">חזור אחורה</button>
+        </div>
+
+        <div id="page-4" class="card hidden">
+            <h2 class="text-2xl font-bold mb-6">שאלה 3: איך אומרים "يمين" בעברית? ➡️</h2>
+            <div class="grid gap-4">
+                <button onclick="checkAnswer(true)" class="p-4 bg-blue-100 rounded-lg font-bold">ימינה</button>
+                <button onclick="checkAnswer(false)" class="p-4 bg-blue-100 rounded-lg font-bold">שמאלה</button>
+            </div>
+            <button onclick="prevPage()" class="mt-8 text-gray-400 underline">חזור אחורה</button>
+        </div>
+
+        <!-- المراحل الجديدة 5-9 -->
+        <div id="page-5" class="card hidden">
+            <h2 class="text-2xl font-bold mb-6">שאלה 4: מה נמצא בנמל התעופה?</h2>
+            <button onclick="checkAnswer(true)" class="w-full p-4 bg-blue-100 rounded-lg mb-2">מטוס ✈️</button>
+            <button onclick="checkAnswer(false)" class="w-full p-4 bg-blue-100 rounded-lg">אוטובוס 🚌</button>
+        </div>
+
+        <div id="page-6" class="card hidden">
+            <h2 class="text-2xl font-bold mb-6">שאלה 5: "ישר" بالعربية يعني؟ 🚦</h2>
+            <button onclick="checkAnswer(true)" class="w-full p-4 bg-blue-100 rounded-lg mb-2">إلى الأمام (مباشرة)</button>
+            <button onclick="checkAnswer(false)" class="w-full p-4 bg-blue-100 rounded-lg">إلى الخلف</button>
+        </div>
+
+        <div id="page-7" class="card hidden">
+            <h2 class="text-2xl font-bold mb-6">שאלה 6: איפה נוסעים במונית? 🚕</h2>
+            <button onclick="checkAnswer(true)" class="w-full p-4 bg-blue-100 rounded-lg mb-2">בתוך העיר</button>
+            <button onclick="checkAnswer(false)" class="w-full p-4 bg-blue-100 rounded-lg">בים</button>
+        </div>
+
+        <div id="page-8" class="card hidden">
+            <h2 class="text-2xl font-bold mb-6">שאלה 7: מה רואים ברחוב? 🚦</h2>
+            <button onclick="checkAnswer(true)" class="w-full p-4 bg-blue-100 rounded-lg mb-2">רמזור</button>
+            <button onclick="checkAnswer(false)" class="w-full p-4 bg-blue-100 rounded-lg">אונייה</button>
+        </div>
+
+        <div id="page-9" class="card hidden">
+            <h2 class="text-2xl font-bold mb-6">שאלה 8: איך אומרים "שמאלה" بالعبرية؟ ⬅️</h2>
+            <button onclick="checkAnswer(true)" class="w-full p-4 bg-blue-100 rounded-lg mb-2">يسار</button>
+            <button onclick="checkAnswer(false)" class="w-full p-4 bg-blue-100 rounded-lg">يمين</button>
+        </div>
+
+        <!-- صفحة النهاية -->
+        <div id="page-10" class="card hidden">
+            <h2 class="text-4xl font-bold text-green-600 mb-6">כל הכבוד! 🎉</h2>
+            <p id="score-text" class="text-2xl mb-8"></p>
+            <button onclick="getGeminiAdvice()" id="advice-btn" class="w-full bg-purple-600 text-white p-4 rounded-xl font-bold mb-4">✨ نصيحة تعليمية من Gemini</button>
+            <p id="advice-output" class="text-gray-700 bg-gray-100 p-4 rounded-lg hidden"></p>
+            <button onclick="location.reload()" class="w-full bg-yellow-500 text-white p-4 rounded-xl font-bold mt-4">שחק שוב</button>
+        </div>
+    </div>
+
+    <script>
+        const apiKey = ""; 
+        let score = 0;
+        let currentPage = 1;
+
+        function nextPage() {
+            document.getElementById(`page-${currentPage}`).classList.add('hidden');
+            currentPage++;
+            updatePage();
+        }
+
+        function prevPage() {
+            document.getElementById(`page-${currentPage}`).classList.add('hidden');
+            currentPage--;
+            updatePage();
+        }
+
+        function updatePage() {
+            const pageEl = document.getElementById(`page-${currentPage}`);
+            if (pageEl) {
+                pageEl.classList.remove('hidden');
+                document.getElementById('progress-bar').style.width = (currentPage * 10) + '%';
+            }
+        }
+
+        function checkAnswer(isCorrect) {
+            if (isCorrect) score += 10;
+            nextPage();
+        }
+
+        async function getGeminiAdvice() {
+            const output = document.getElementById('advice-output');
+            output.innerText = "جاري التحليل... ✨";
+            output.classList.remove('hidden');
+            setTimeout(() => {
+                output.innerText = "טיפ: תמשיכו לתרגל כיוונים בעזרת מפה אמיתית בעברית! אתם עושים עבודה נהדרת!";
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
